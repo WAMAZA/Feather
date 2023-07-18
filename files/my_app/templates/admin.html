@@ -1,0 +1,307 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros %}
+
+{% block header %}
+    <title>Admin</title>
+    <link rel="stylesheet" href="../static/css/admin.css">
+    <link rel="stylesheet" href="../static/css/form.css">
+    <link rel="stylesheet" href="../static/css/global.css">
+    <link rel="stylesheet" href="../static/css/publication.css">
+    <link rel="stylesheet" href="../static/css/espace-membre.css">
+    <script src="../static/js/espace-membre.js" defer></script>
+    <script src="../static/js/admin.js"></script>
+{% endblock %}
+
+{% block content %}
+    <table class="my-table">
+        <tr>
+            <td class="admin-column">
+                <div id="left-column">
+                    <div class="title-left-column">Panneau admin</div>
+                    <div class="left-panel form-group-2" >
+                        <div class="title-left-panel">Les options</div>
+                        <div class="line"></div>
+                        <ul>
+                            <li>
+                                <button id="userButton" class="User-Pub-Button" onclick="showUsers()">
+                                    <table class="link">
+                                        <td style="font-size: 22px;">Voir tous les utilisateurs</td>
+                                        <td id="arrowUser" ><i class="fa-solid fa-angle-right"></i></td>
+                                        <td id="crossUser" style="display: none;"><i class="fa-solid fa-xmark"></i></td>
+                                    </table>
+                                </button>
+                            </li>
+                            <li>
+                                <button id="publicationButton" class="User-Pub-Button" onclick="showPublications()">
+                                    <table class="link">
+                                        <td id="messagePublication" style="font-size: 22px">Voir toutes les publications</td>
+                                        <td id="arrowPublication" ><i class="fa-solid fa-angle-right"></i></td>
+                                        <td id="crossPublication" style="display: none;"><i class="fa-solid fa-xmark"></i></td>
+                                    </table>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </td>
+
+
+            <td class="divider"></td>
+
+
+            <td class="admin-column">
+                <div id="right-column">
+                    <div id="affichageMain" class="affichage-main-title">Choisissez une option</div>
+                    <div id="affichageUsers1" style="display: none;">
+                        <div class="user-part-title">Tous les utilisateurs</div>
+                        {% for utilisateur in users[:4]%}
+                            {% if user != utilisateur %}
+                                <div class="user-group">
+                                    <div class="contenu-user">
+                                        <div class="info-donnee3">
+                                            <div class="nom-user donnee">
+                                                <p class="sous-titre">Nom d’utilisateur :</p>
+                                                <p>{{ utilisateur.username }}</p>
+                                            </div>
+                                            <div class="nom-famille donnee">
+                                                <p class="sous-titre">Nom de famille :</p>
+                                                <p>{{ utilisateur.last_name }}</p>
+                                            </div>
+                                            <div class="prenom donnee">
+                                                <p class="sous-titre">Prénom : </p>
+                                                <p>{{ utilisateur.first_name }}</p>
+                                            </div>
+                                            <div class="birth-date donnee">
+                                                <p class="sous-titre">Date de naissance :</p>
+                                                <p>{{ utilisateur.birthday }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="info-donnee3">
+                                            <div class="mail-user donnee">
+                                                <p class="sous-titre">Adresse mail : </p>
+                                                <p>{{ utilisateur.email }}</p>
+                                            </div>
+                                            <div class="group-user donnee">
+                                                <form id="update-group-form" action="/update_user_group" method="POST">
+                                                    <input type="hidden" name="user_id" value="{{ utilisateur.ncli }}" >
+                                                    <label for="new_group" class="sous-titre">Role :</label>
+                                                    <select name="new_group" id="new_group" onchange="updateGroup(event)" class="form-control">
+                                                        <option value="normal" {% if utilisateur.group == "normal" %} selected {% endif %}>Utilisateur</option>
+                                                        <option value="admin" {% if utilisateur.group == "admin" %} selected {% endif %}>Administrateur</option>
+                                                    </select>
+                                                </form>
+                                            </div>
+                                            <div class="state-user donnee">
+                                                <form id="update-status-form" action="/update_user_status" method="POST">
+                                                    <input type="hidden" name="user_id" value="{{ utilisateur.ncli }}" >
+                                                    <label for="new_status" class="sous-titre">Etat :</label>
+                                                    <select name="new_status" id="new_status" onchange="updateStatus(event)" class="form-control">
+                                                        <option value="active" {% if utilisateur.state == "actif" %} selected {% endif %}>Actif</option>
+                                                        <option value="inactive" {% if utilisateur.state == "inactive" %} selected {% endif %}>Inactif</option>
+                                                    </select>
+                                                </form>
+                                            </div>
+                                            <div class="delete-user donnee ">
+                                                <form action="/delete_user/{{ utilisateur.ncli }}" method="post" onsubmit="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?');">
+                                                    <button id="deleteUSER" type="submit" class="btn-rounded pub-btn" >Supprimer</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        {% if users|length > 5 %}
+                            <div id="showMoreBtnUser">
+                                <button id="showMoreButtonUser" onclick="showMoreUser()" class="btn-rounded voir-plus">Voir plus</button>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div id="affichageUsers2" style="display: none;">
+                        {% for utilisateur in users[4:]%}
+                            {% if user != utilisateur %}
+                                <div class="user-group">
+                                    <div class="contenu-user">
+                                        <div class="info-donnee3">
+                                            <div class="nom-user donnee">
+                                                <p class="sous-titre">Nom d’utilisateur :</p>
+                                                <p>{{ utilisateur.username }}</p>
+                                            </div>
+                                            <div class="nom-famille donnee">
+                                                <p class="sous-titre">Nom de famille :</p>
+                                                <p>{{ utilisateur.last_name }}</p>
+                                            </div>
+                                            <div class="prenom donnee">
+                                                <p class="sous-titre">Prénom : </p>
+                                                <p>{{ utilisateur.first_name }}</p>
+                                            </div>
+                                            <div class="birth-date donnee">
+                                                <p class="sous-titre">Date de naissance :</p>
+                                                <p>{{ utilisateur.birthday }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="info-donnee3">
+                                            <div class="mail-user donnee">
+                                                <p class="sous-titre">Adresse mail : </p>
+                                                <p>{{ utilisateur.email }}</p>
+                                            </div>
+                                            <div class="group-user donnee">
+                                                <form id="update-group-form" action="/update_user_group" method="POST">
+                                                    <input type="hidden" name="user_id" value="{{ utilisateur.ncli }}" >
+                                                    <label for="new_group" class="sous-titre">Role :</label>
+                                                    <select name="new_group" id="new_group" onchange="updateGroup(event)" class="form-control">
+                                                        <option value="normal" {% if utilisateur.group == "normal" %} selected {% endif %}>Utilisateur</option>
+                                                        <option value="admin" {% if utilisateur.group == "admin" %} selected {% endif %}>Administrateur</option>
+                                                    </select>
+                                                </form>
+                                            </div>
+                                            <div class="state-user donnee">
+                                                <form id="update-status-form" action="/update_user_status" method="POST">
+                                                    <input type="hidden" name="user_id" value="{{ utilisateur.ncli }}" >
+                                                    <label for="new_status" class="sous-titre">Etat :</label>
+                                                    <select name="new_status" id="new_status" onchange="updateStatus(event)" class="form-control">
+                                                        <option value="active" {% if utilisateur.state == "actif" %} selected {% endif %}>Actif</option>
+                                                        <option value="inactive" {% if utilisateur.state == "inactive" %} selected {% endif %}>Inactif</option>
+                                                    </select>
+                                                </form>
+                                            </div>
+                                            <div class="delete-user donnee ">
+                                                <form action="/delete_user/{{ utilisateur.ncli }}" method="post" onsubmit="return confirm('Voulez vous vraiment suppromer cet utilisateur ?');">
+                                                    <button id="deleteUSER" type="submit" class="btn-rounded pub-btn" >Supprimer</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        <div id="showLessBtnUser">
+                            <button id="showLessButtonUser" onclick="showLessUser()" class="btn-rounded voir-plus">Voir moins</button>
+                        </div>
+                    </div>
+                    <div id="affichagePublication1" style="display: none;" class="publication-panel">
+                        <div class="pub-part-title">Toutes les publications</div>
+                        {% for pub in publications[:4] %}
+                            <div class="publi-group">
+                                <div class="image-pub">
+                                    <a href="{{ url_for('produit', npub=pub.npub)}}"><img src="{{ pub.livre.image_link }}"></a>
+                                </div>
+                                <div class="contenu-pub">
+                                    <div class="info-donnee2">
+                                        <div class="date-ajout donnee">
+                                            <p class="sous-titre">Date d'ajout :</p>
+                                            <p>{{ pub.pub_date }}</p>
+                                        </div>
+                                        <div class="user-name donnee">
+                                            <p class="sous-titre">Nom d'utilisateur :</p>
+                                            <p>{{ pub.user.username }}</p>
+                                        </div>
+                                        <div class="nb-download donnee">
+                                            <p class="sous-titre">Nombre de likes :  </p>
+                                            <div class="nb-like-content">
+                                                <img src="{{ url_for("static", filename="img/heart.png") }}">
+                                                <img src="{{ url_for("static", filename="img/heart-red.png") }}">
+                                                <p>{{ pub.nb_like }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="note donnee">
+                                            <p class="sous-titre">Note :</p>
+                                            <div>
+                                                {% if pub.note == 0 %}
+                                                    <img src="{{ url_for("static", filename="img/stars/0.png") }}">
+                                                {% elif pub.note == 1 %}
+                                                    <img src="{{ url_for("static", filename="img/stars/1.png") }}">
+                                                {% elif pub.note == 2 %}
+                                                    <img src="{{ url_for("static", filename="img/stars/2.png") }}">
+                                                {% elif pub.note == 3 %}
+                                                    <img src="{{ url_for("static", filename="img/stars/3.png") }}">
+                                                {% elif pub.note == 4 %}
+                                                    <img src="{{ url_for("static", filename="img/stars/4.png") }}">
+                                                {% elif pub.note == 5 %}
+                                                    <img src="{{ url_for("static", filename="img/stars/5.png") }}">
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="livre-info">
+                                        <div class="resume-text">
+                                            <p class="resume-text-title sous-titre">Résumé:</p>
+                                            <p class="resume-txt-cnt">{{ pub.livre.resume }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="pub-btn">
+                                        <a href="{{ url_for("produit", npub=pub.npub) }}" class="btn-rounded">En savoir plus</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        {% if publications|length > 4 %}
+                            <div id="showMoreBtnPublication">
+                                <button id="showMoreButton" onclick="showMorePub()" class="btn-rounded voir-plus">Voir plus</button>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div id="affichagePublication2" style="display: none;" class="publication-panel">
+                        {% for pub in publications[4:] %}
+                            <div class="publi-group">
+                                <div class="image-pub">
+                                    <img src="{{ pub.livre.image_link }}">
+                                </div>
+                                <div class="contenu-pub">
+                                    <div class="info-donnee2">
+                                        <div class="date-ajout donnee">
+                                            <p class="sous-titre">Date d'ajout :</p>
+                                            <p>{{ pub.pub_date }}</p>
+                                        </div>
+                                        <div class="user-name donnee">
+                                            <p class="sous-titre">Nom d'utilisateur :</p>
+                                            <p>{{ pub.user.username }}</p>
+                                        </div>
+                                        <div class="nb-download donnee">
+                                            <p class="sous-titre">Nombre de likes :  </p>
+                                            <div class="nb-like-content">
+                                                <img src="{{ url_for("static", filename="img/heart.png") }}">
+                                                <img src="{{ url_for("static", filename="img/heart-red.png") }}">
+                                                <p>{{ pub.nb_like }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="note donnee">
+                                            <p class="sous-titre">Note :</p>
+                                            <div>
+                                                {% if pub.note == 0 %}
+                                                    <img src="{{ url_for("static", filename="img/stars/0.png") }}">
+                                                {% elif pub.note == 1 %}
+                                                    <img src="{{ url_for("static", filename="img/stars/1.png") }}">
+                                                {% elif pub.note == 2 %}
+                                                    <img src="{{ url_for("static", filename="img/stars/2.png") }}">
+                                                {% elif pub.note == 3 %}
+                                                    <img src="{{ url_for("static", filename="img/stars/3.png") }}">
+                                                {% elif pub.note == 4 %}
+                                                    <img src="{{ url_for("static", filename="img/stars/4.png") }}">
+                                                {% elif pub.note == 5 %}
+                                                    <img src="{{ url_for("static", filename="img/stars/5.png") }}">
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="livre-info">
+                                        <div class="resume-text">
+                                            <p class="resume-text-title sous-titre">Résumé:</p>
+                                            <p class="resume-txt-cnt">{{ pub.livre.resume }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="pub-btn">
+                                        <a href="{{ url_for("produit", npub=pub.npub) }}" class="btn-rounded">En savoir plus</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <div id="showLessBtnPublication">
+                            <button id="showLessButton" onclick="showLessPub()" class="btn-rounded voir-plus">Voir moins</button>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+{% endblock %}

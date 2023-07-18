@@ -1,0 +1,31 @@
+.main{
+    display: flex;
+    align-items: flex-start;
+    padding-top: 60px !important;
+}
+
+.side{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 72px 20px;
+    width: 50%;
+}
+
+.img-style{
+    padding: 40px;
+}
+
+.side .img-style{
+    text-align: center;
+    align-items: center;
+}
+
+.side .img-style p{
+    font-size: 30px;
+}
+
+#file-chosen{
+    overflow: hidden;
+}

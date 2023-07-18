@@ -1,0 +1,106 @@
+.form{
+    display: flex;
+    justify-content: center;
+}
+
+.error{
+    text-align: left;
+    color: #FD7542;
+}
+
+/* Form contents */
+.form-group{
+    width: 100%;
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    max-width: 450px;
+    padding: 40px;
+    border: 2px black;
+    box-shadow: 0 0 5px 1px rgba(215,222,221,0.75);
+    -webkit-box-shadow: 0 0 5px 1px rgba(215,222,221,0.75);
+    -moz-box-shadow: 0 0 5px 1px rgba(215,222,221,0.75);
+}
+
+.form-group .title h1{
+    text-align: left !important;
+    margin-bottom: 16px;
+}
+
+.line{
+    border:1px solid #d7dedd;
+    margin-bottom: 16px;
+}
+
+.form-field{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.field{
+    display:flex;
+    flex-direction:column;
+}
+.field label{
+    text-align: left;
+    font-size: 16px;
+}
+
+.field-input{
+    padding:8px;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-bottom: 1.5px solid #484747;
+}
+
+.submit-btn{
+    font-size: 16px;
+    padding:8px;
+    height: fit-content;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+.checkbox-field{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+#resume{
+    height: auto;
+}
+
+.upload-file{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.upload-file-input label{
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.upload-file-input label:hover{
+    color: #6C6C6C;
+}
+
+.upload-file-input img{
+    width: 20px;
+    height: 20px;
+}
+
+.field input[type="file"]{
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}

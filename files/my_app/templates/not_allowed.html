@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <title>Page non autorisée !</title>
+    <link rel="stylesheet" href="../static/css/not_allowed.css">
+{% endblock %}
+{% block content %}
+    <div class="main first-div normal-div">
+        <div class="status">
+            <span>{{ status }}</span>
+        </div>
+        <div class="message">
+            {{ message }}
+        </div>
+        <div class="back-btn">
+            <a class="btn" href="{{ url_for("accueil") }}">Retour à l'accueil</a>
+        </div>
+    </div>
+{% endblock %}
+

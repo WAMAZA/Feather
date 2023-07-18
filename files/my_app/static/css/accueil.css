@@ -1,0 +1,50 @@
+.all-product{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 58px;
+    justify-content: center;
+}
+
+.recent-product{
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+.recent-product .product:nth-child(n+4){
+    display: none;
+}
+
+.publi-actions{
+    display: flex;
+}
+
+#load-more{
+    margin: auto;
+}
+
+.buttons{
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    align-items: center;
+}
+
+.buttons img{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.product-img:hover{
+    width: 164px;
+    height: 246px;
+    transition: .3s;
+}
+
+a .heart-style{
+    display: flex;
+}
+
+.normal-div{
+    height: fit-content;
+}

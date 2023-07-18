@@ -1,0 +1,29 @@
+{% extends "member_space.html" %}
+{% import "macros.html" as macros %}
+
+{% block form %}
+    <form id="ch_passwd_form" class="normal-div form" action="{{ url_for('changePassword')}}" method="post" novalidate style="height: fit-content">
+        <div class="content form-group" style="justify-content: normal">
+            <span id="ch_mot_de_passe_title">Changer de mot de passe</span>
+            <span class="success">
+            </span>
+            <div class="error">
+                {% if error %}
+                    {{ error }}
+                {% endif %}
+            </div>
+            <div class="line"></div>
+            <div class="form-field">
+
+                {{ form.csrf_token }}
+
+                {{ macros.render_field(form.old_password, 'old_password') }}
+                {{ macros.render_field(form.new_password, 'new_password') }}
+                {{ macros.render_field(form.retype_new_password, 'retype_new_password') }}
+
+                {{ form.submit(class='submit-btn btn') }}
+                <a id="cancel-btn-passwd" href="{{ url_for('changeInfo') }}" class="submit-btn btn">Annuler</a>
+            </div>
+        </div>
+    </form>
+{% endblock %}

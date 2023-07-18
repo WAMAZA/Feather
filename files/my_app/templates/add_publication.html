@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros %}
+
+{% block header %}
+    <title>Ajout publication</title>
+    <link rel="stylesheet" href="../static/css/form.css">
+    <script src="../static/js/form.js" defer></script>
+{% endblock %}
+
+{% block content %}
+    <div class="first-div"></div>
+    <form class="normal-div form" action="{{ url_for('ajout_pub') }}" method="post" enctype="multipart/form-data" novalidate>
+        <div class="form-group">
+            <div class="title">
+                <h1>Ajouter une publication</h1>
+            </div>
+            <div class="error">
+                {% if error %}
+                    {{ error }}
+                {% endif %}
+            </div>
+            <div class="line"></div>
+            <div class="form-field">
+                {{ form.csrf_token }}
+                {{ macros.render_field(form.titre, "Titre")}}
+                {{ macros.render_field(form.auteur, "Auteur")}}
+                {{ macros.render_field(form.resume, "Résumé")}}
+                {{ macros.render_field(form.ajout_pdf, "Ajouter un fichier (PDF)")}}
+                {{ macros.render_field(form.ajout_img, "Ajouter une converture (PNG, JPG)")}}
+                {{ form.submit(class='submit-btn') }}
+            </div>
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros %}
+
+
+{% block header %}
+    <link rel="stylesheet" href="../static/css/form.css">
+    <link rel="stylesheet" href="../static/css/modify-publication.css">
+    <script src="../static/js/form.js" defer></script>
+{% endblock %}
+
+{% block content %}
+    <div class="main first-div">
+        <div class="left-side side">
+            <form class="normal-div form" action="{{ url_for('modifier_pub', npub=book.nlivre) }}" method="post" enctype="multipart/form-data" novalidate>
+                <div class="form-group">
+                    <div class="title">
+                        <h1>Modifier la publication</h1>
+                    </div>
+                    <div class="error">
+                        {% if error %}
+                            {{ error }}
+                        {% endif %}
+                    </div>
+
+                    <div class="line"></div>
+                    <div class="form-field">
+                        {{ form.csrf_token }}
+                        {{ macros.render_field(form.titre, "Titre", book.titre)}}
+                        {{ macros.render_field(form.auteur, "Auteur", book.auteur)}}
+                        {{ macros.render_field(form.resume, "Résumé", book.resume)}}
+                        {{ macros.render_field(form.ajout_pdf, "Ajouter un fichier (PDF)", book.pdf_link)}}
+                        {{ macros.render_field(form.ajout_img, "Ajouter une converture (PNG, JPG)", book.image_link)}}
+                        {{ form.submit(class='submit-btn btn') }}
+                        <a href="{{ url_for("espace_membre") }}" class="submit-btn btn">Annuler</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="right-side side">
+            <div class="old-img img-style">
+                <p>Ancienne couverture</p>
+                <img src="{{ book.image_link }}">
+            </div>
+            <div class="new-img img-style">
+                <p>Nouvelle couverture</p>
+                <img id="current_img">
+            </div>
+        </div>
+    </div>
+{% endblock %}

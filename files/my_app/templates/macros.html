@@ -1,0 +1,294 @@
+
+{% macro render_product_like_and_download_btn(pub, user, curPath= "/") %}
+    <span class="nb_like{{ pub.npub }}">
+        {% if pub.nb_like > 0 %}
+            {{ pub.nb_like }}
+        {% endif %}
+    </span>
+    {% if user and user.is_authenticated %}
+        {% if pub.isLiked(user) %}
+            <img class="heart heart-style" id="heart{{ pub.npub }}" src="../static/img/heart-red.png" alt="coeur">
+        {% else %}
+            <img class="heart heart-style" id="heart{{ pub.npub }}" src="../static/img/heart.png" alt="coeur">
+        {% endif %}
+
+    {% else %}
+         <a href="{{ url_for('connexion', next = curPath) }}">
+            <img class="heart-style" src="../static/img/heart.png" alt="coeur">
+        </a>
+    {% endif %}
+{% endmacro %}
+
+
+<!--
+This macro is used to render product on the main page
+-->
+{% macro render_product(pubs, user, like) %}
+    {% for pub in pubs %}
+        <div class="product">
+            <a href="{{ url_for("produit", npub=pub.npub) }}"><img class="product-img" src="{{ pub.livre.image_link }}"></a>
+            <div class="buttons">
+                <a href="{{ url_for("telecharger_produit", npub=pub.npub) }}" class="btn-rounded" target="_blank">Télécharger</a>
+                {{ render_product_like_and_download_btn(pub, user) }}
+            </div>
+        </div>
+    {% endfor %}
+{% endmacro %}
+
+<!--
+This macro is used to render formular field
+-->
+{% macro render_field(field, field_id, default_value="") %}
+    <div class="field">
+        {% if field.type == "BooleanField" %}
+            <span class="checkbox-field">{{ field }} {{ field.label }}</span>
+            <div class="error">
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                        {{ error }}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        {% else %}
+            {% if field.type == "FileField" %}
+                <div class="upload-file">
+                {% if field.id == "ajout_pdf" %}
+                    <div class="upload-file-label">
+                        <label>Ajouter un fichier (PDF)</label>
+                    </div>
+
+                {% elif field.id == "ajout_img" %}
+                    <div class="upload-file-label">
+                        <label>Ajouter une couverture (PNG, JPG)</label>
+                    </div>
+                {% endif %}
+                    <div class="upload-file-input field-input">
+                        <label class="{{ field.id }}" for="{{ field.id }}">
+                            <img src="{{ url_for("static", filename="img/search.png") }}"></img>
+                            <span id="file-chosen">Ajouter un fichier</span>
+                        </label>
+                    </div>
+                </div>
+            {% else %}
+                <label>{{field.label}}</label>
+            {% endif %}
+
+            {% if field.type == "TextAreaField" %}
+                <textarea class="field-input" rows='3' data-min-rows='3' id="{{ field.id }}" name="{{ field.name }}" placeholder="mon {{ field.id}}..." required>{{ default_value }}</textarea>
+            {% elif field.type == "FileField" %}
+                {% if field.id == "ajout_pdf" %}
+                    <input class="field-input" name="{{ field.name }}" id="{{ field.id }}" accept="application/pdf" type="file">
+                {% elif field.id == "ajout_img" %}
+                    <input class="field-input" name="{{ field.name }}" id="{{ field.id }}" accept="image/*" type="file">
+                {% endif %}
+            {% else %}
+                {{field(class='field-input', value=default_value)}}
+            {% endif %}
+
+            <div class="error">
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                        {{ error }}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+<!--
+This macro is used to render the datefiled in formular
+-->
+{% macro render_date(field, field_id, maxDate, default_value="") %}
+    {# Max Date #}
+    <label>
+        {{field.label}}
+    </label>
+    {{field(class='field-input', value=default_value, max=maxDate)}}
+    {# End Max Date #}
+{% endmacro %}
+
+<!-- This macro allows you to display the stars depends on the value of the note -->
+{% macro show_note(table, class) %}
+    {% if table.note == 0 %}
+        <img class="{{ class }}" src="{{ url_for("static", filename="img/stars/0.png") }}">
+    {% elif table.note == 1 %}
+        <img class="{{ class }}" src="{{ url_for("static", filename="img/stars/1.png") }}">
+    {% elif table.note == 2 %}
+        <img class="{{ class }}" src="{{ url_for("static", filename="img/stars/2.png") }}">
+    {% elif table.note == 3 %}
+        <img class="{{ class }}" src="{{ url_for("static", filename="img/stars/3.png") }}">
+    {% elif table.note == 4 %}
+        <img class="{{ class }}" src="{{ url_for("static", filename="img/stars/4.png") }}">
+    {% elif table.note == 5 %}
+        <img class="{{ class }}" src="{{ url_for("static", filename="img/stars/5.png") }}">
+    {% endif %}
+{% endmacro %}
+
+<!--
+This macro is used to render publicatins on the member space
+-->
+{% macro render_pub(pubs) %}
+    {% for pub in pubs %}
+        <div class="pub-group">
+            <div class="image-pub">
+                <a href="{{ url_for("produit", npub=pub.npub) }}"><img src="{{ pub.livre.image_link }}"></a>
+            </div>
+            <div class="contenu-pub">
+                <div class="info-donnee">
+                    <div class="date-ajout donnee">
+                        <p class="sous-titre">Date ajout :</p>
+                        <p>{{ pub.pub_date }}</p>
+                    </div>
+                    <div class="nb-like donnee">
+                        <p class="sous-titre">Nombre de likes :</p>
+                        <div class="nb-like-content">
+                            <img src="{{ url_for("static", filename="img/heart.png") }}">
+                            <img src="{{ url_for("static", filename="img/heart-red.png") }}">
+                            <p>{{ pub.nb_like }}</p>
+                        </div>
+                    </div>
+                    <div class="nb-download donnee">
+                            <p class="sous-titre">Nombre de téléchargement : </p>
+                            <p>{{ pub.nb_download }}</p>
+                        </div>
+                        <div class="note donnee">
+                            <p class="sous-titre">Note :</p>
+                            {{ show_note(pub, "") }}
+                        </div>
+                </div>
+
+                <div class="livre-info">
+                    <div class="titre-pub">
+                        <p class="sous-titre">Titre :</p>
+                        <p>{{ pub.livre.titre }}</p>
+                    </div>
+                    <div class="auteur-pub">
+                        <p class="sous-titre">Auteur :</p>
+                        <p>{{ pub.livre.auteur }}</p>
+                    </div>
+                    <div class="resume-text">
+                        <p class="resume-text-title sous-titre">Résumé:</p>
+                        <p class="resume-text-content">{{ pub.livre.resume }}</p>
+                    </div>
+                </div>
+                    <form class="pub-btn" action="{{url_for("supprimer_pub", npub=pub.npub)}}" method="post" onsubmit="return confirm('Voulez-vous vraiment supprimer cette publication ?');">
+                        <a href="{{ url_for("produit", npub=pub.npub) }}" class="btn-rounded">En savoir plus</a>
+                        <a href="{{ url_for("modifier_pub", npub=pub.npub) }}" class="btn-rounded">Modifier</a>
+                        <button id="delete-pub-btn" type="submit" class="btn-rounded">Supprimer</button>
+                    </form>
+            </div>
+        </div>
+    {% endfor %}
+{% endmacro %}
+
+{% macro render_liked_pub(pubs) %}
+    {% for pub in pubs %}
+        <div class="pub-group">
+            <div class="image-pub">
+                <a href="{{ url_for("produit", npub=pub.npub) }}"><img src="{{ pub.livre.image_link }}"></a>
+            </div>
+            <div class="contenu-pub">
+                <div class="info-donnee">
+                    <div class="date-ajout donnee">
+                        <p class="sous-titre">Date ajout :</p>
+                        <p>{{ pub.pub_date }}</p>
+                    </div>
+                    <div class="nb-like donnee">
+                        <p class="sous-titre">Nombre de likes :</p>
+                        <div class="nb-like-content">
+                            <img src="{{ url_for("static", filename="img/heart.png") }}">
+                            <img src="{{ url_for("static", filename="img/heart-red.png") }}">
+                            <p>{{ pub.nb_like }}</p>
+                        </div>
+                    </div>
+                    <div class="nb-download donnee">
+                            <p class="sous-titre">Nombre de téléchargement : </p>
+                            <p>{{ pub.nb_download }}</p>
+                        </div>
+                        <div class="note donnee">
+                            <p class="sous-titre">Note :</p>
+                            {{ show_note(pub, "") }}
+                        </div>
+                </div>
+
+                <div class="livre-info">
+                    <div class="titre-pub">
+                        <p class="sous-titre">Titre :</p>
+                        <p>{{ pub.livre.titre }}</p>
+                    </div>
+                    <div class="auteur-pub">
+                        <p class="sous-titre">Auteur :</p>
+                        <p>{{ pub.livre.auteur }}</p>
+                    </div>
+                    <div class="resume-text">
+                        <p class="resume-text-title sous-titre">Résumé:</p>
+                        <p class="resume-text-content">{{ pub.livre.resume }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endmacro %}
+
+
+
+<!-- This macro allows you to render all comments on the product page -->
+{% macro render_comments(comments, pub) %}
+    {% for comment in comments %}
+    <div class="avis-box">
+        <div class="avis-info">
+            <div class="avis-info-left">
+                <span>{{ comment.user.username }}</span>
+                <span>|</span>
+                <span>{{ comment.comment_date }}</span>
+            </div>
+            <div class="avis-info-right">
+                {{ show_note(comment, "note") }}
+            </div>
+        </div>
+        <p class="contenu"> {{ comment.contenu }}</p>
+    </div>
+    {% endfor %}
+{% endmacro %}
+
+<!-- This macro allows you to render all comments on the member space page -->
+{% macro render_comments_member_space(comments) %}
+    {% for comment in comments %}
+    <div class="avis-box">
+        <div class="avis-info">
+            <div class="avis-info-left">
+                <span>{{ comment.comment_date }}</span>
+                {{ show_note(comment, "note") }}
+            </div>
+            <div class="avis-info-right">
+                <p class="contenu"> {{ comment.contenu }}</p>
+
+            </div>
+            <a href="{{ url_for("produit", npub=comment.npub)}}" class="btn-rounded gray-btn">En savoir plus</a>
+        </div>
+
+    </div>
+    {% endfor %}
+{% endmacro %}
+
+{% macro render_comment_field(field)%}
+    {% if field.type == "TextAreaField" %}
+    <div class="form-commentaire">
+        <label>{{ field.label }}</label>
+        <textarea id="{{ field.id }}" class="field-input" name="{{ field.name }}" placeholder="donnez votre avis, ne soyez pas timide ;)"></textarea>
+        <div class="error">
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    {{ error }}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    {% elif field.type == "SelectField" %}
+    <div class="form-note">
+        <label>Note</label>
+        {{field(class="field-input")}}
+    </div>
+    {% endif %}
+{% endmacro %}

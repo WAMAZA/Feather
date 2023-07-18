@@ -1,0 +1,154 @@
+.main{
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    padding-top: 60px !important;
+}
+
+
+.side{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 72px 20px;
+    gap: 48px;
+    width: 50%;
+    height: 100%;
+}
+
+.top{
+    width: 100%;
+    display: flex;
+}
+
+.bottom{
+    display: flex;
+    width: 100%;
+}
+
+.left{
+    position: sticky;
+    top: 65px;
+}
+
+
+.title{
+    display: flex;
+    flex-direction: column;
+    text-align: center !important;
+}
+
+/* Information */
+/* Content */
+
+#ch_info_form{
+    width: 100%;
+}
+
+.fake-title{
+    font-size: 25px;
+    margin-bottom: 16px;
+}
+
+#ch_mot_de_passe_title{
+    font-size: 25px;
+    margin-bottom: 16px;
+}
+
+.success, .ch_pass_success{
+    color: green;
+}
+
+.ch-info-error{
+    color: #FD7542;
+}
+
+.form-field a {
+    text-align: center;
+}
+
+/* User's Option */
+.option-field{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.fake-sub-title{
+    font-size: 20px;
+}
+
+.bottom .right{
+    margin: auto;
+    justify-content: center;
+}
+
+#other_functions{
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+}
+
+.no-pub{
+    text-align: center;
+    margin: auto;
+}
+
+.deleteAccount{
+    width: fit-content !important;
+    margin: auto;
+}
+
+.buttons-f{
+    display: flex;
+    gap: 5px;
+    margin: 0 50px;
+}
+
+.buttons-f *{
+    width: 50%;
+}
+
+/* comment */
+.avis-info{
+    flex-direction: column;
+    align-items: flex-start !important;
+}
+
+.avis-info-left{
+    width: 100%;
+    justify-content: space-between;
+}
+
+.avis-info-right{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.gray-btn{
+    font-size: 12px;
+    background-color: #6C6C6C;
+    color: white;
+}
+
+.mesLikes .pub-group:nth-child(n+4){
+    display: none;
+}
+
+.mesComments .avis-box:nth-child(n+4){
+    display: none;
+}
+
+.deleteAccount .fake-title{
+    margin-bottom: 0;
+}
+
+/* footer */
+.footer{
+    margin-top: 0 !important;
+}
+

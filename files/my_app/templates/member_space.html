@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros %}
+
+{% block header %}
+    <title>Espace membre</title>
+    <link rel="stylesheet" href="../static/css/espace-membre.css">
+    <link rel="stylesheet" href="../static/css/form.css">
+    <link rel="stylesheet" href="../static/css/publication.css">
+    <link rel="stylesheet" href="../static/css/comment.css">
+    <script src="../static/js/espace-membre.js" defer></script>
+    <script src="../static/js/load-more.js" defer></script>
+{% endblock %}
+
+
+{% block content %}
+    <div class="main first-div">
+        <div class="top">
+            <div class="left side">
+                <div class="title">
+                    <h1>Espace membre</h1>
+                    <a class="link" href="{{ url_for("deconnexion") }}">déconnexion</a>
+                </div>
+                {% block form %}
+                <form id="ch_info_form" class="form" action="{{ url_for('espace_membre') }}"  method="post">
+                    <div class="content form-group">
+                        <span class="fake-title">Mes informations</span>
+                        <span class="success">
+                        </span>
+                        <span class="ch-info-error"></span>
+                        <span class="ch_pass_success">
+                            {% if success %}
+                                {{ success }}
+                            {% endif %}
+                        </span>
+                        <div class="line"></div>
+                        <div class="form-field">
+
+                            <!-- ID -->
+                            <div class="field">
+                                <label>ID</label>
+                                <input class="field-input" id="id" name="id" type="text" value="{{ user.ncli }}" disabled>
+                                <div class="error"></div>
+                            </div>
+
+                             <!-- LastName -->
+                            <div class="field">
+                                <label>Nom</label>
+                                <input class="field-input" id="last_name" name="last_name" type="text" value="{{ user.last_name }}" disabled>
+                                <div class="error"></div>
+                            </div>
+
+                             <!-- FirstName -->
+                            <div class="field">
+                                <label>Prénom</label>
+                                <input class="field-input" id="first_name" name="first_name" type="text" value="{{ user.first_name }}" disabled>
+                                <div class="error"></div>
+                            </div>
+
+                             <!-- Username -->
+                            <div class="field">
+                                <label>Nom d'utilisateur</label>
+                                <input class="field-input" id="username" name="username" type="text" value="{{ user.username }}" disabled>
+                                <div class="error"></div>
+                            </div>
+
+                             <!-- Email -->
+                            <div class="field">
+                                <label>Email</label>
+                                <input class="field-input" id="email" name="email" type="text" value="{{ user.email }}" disabled>
+                                <div class="error"></div>
+                            </div>
+
+                             <!-- Birthday -->
+                            <div class="field">
+                                <label>Date de naissance</label>
+                                <input class="field-input" id="birthday" name="birthday" type="date" value="{{ user.birthday }}" disabled max="{{maxDate}}">
+                                <div class="error"></div>
+                            </div>
+
+
+                            <div class="submit-btn-div">
+                                <input id="realBtn" type="submit" class="submit-btn btn" value="Modifier">
+                            </div>
+
+
+                            <button id="fakeBtn" class="submit-btn btn" type="button">Modifier mes informations</button>
+                            <button id="cancel-btn" class="submit-btn btn" type="button">Annuler</button>
+                            <a href="{{ url_for("changePassword") }}" id="ch_password_btn" class="change_pwd submit-btn btn">Modifier mon mot de passe</a>
+                        </div>
+                    </div>
+                </form>
+                {% endblock %}
+            </div>
+
+            <div class="right side">
+                <div class="title">
+                    <h1>Mes publications</h1>
+                    <a class="link" href="{{ url_for("ajout_pub") }}">Ajouter une publication</a>
+                </div>
+                <div id="myPub" class="pub-content">
+                    {% if pubs %}
+                        {{ macros.render_pub(pubs) }}
+                        <button id="load-more-em" class="btn-rounded align-btn gray-btn">Voir plus</button>
+                    {% else %}
+                        <span class="no-pub form-group">vous n'avez pas de publications</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <span id="other_functions">Autres fonctionnalités</span>
+        <div class="bottom">
+            <div class="left side">
+                <div class="form-group">
+                    <span class="fake-title">Mes options</span>
+                    <div class="line"></div>
+                    <ul>
+                        <li>
+                            <div class="option-field">
+                                <p class="fake-sub-title">Voir mes likes</p>
+                                <i class="mesLikesbtn fa-solid fa-angle-right"></i>
+                            </div>
+                        </li>
+                            <div class="option-field">
+                                <p class="fake-sub-title">Voir mes commentaires</p>
+                                <i class="mesCommentsBtn fa-solid fa-angle-right"></i>
+                            </div>
+                        </li>
+                        </li>
+                            <div class="option-field">
+                                <p class="fake-sub-title">Supprimer mon compte</p>
+                                <i class="deleteAccountBtn fa-solid fa-angle-right"></i>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="right side">
+                <span class="fake-title" id="optionText">Choisissez une option !</span>
+                <div id="mesLikes" class="mesLikes pub-content">
+                    {% if liked %}
+                        {{ macros.render_liked_pub(liked) }}
+                        <button id="load-more-em-like" class="btn-rounded align-btn gray-btn">Voir plus</button>
+                    {% else %}
+                        <span class="no-pub form-group">Vous n'avez pas de likes</span>
+                    {% endif %}
+
+                </div>
+                <div id="mesComments" class="mesComments pub-content">
+                    {% if myComments %}
+                        {{ macros.render_comments_member_space(myComments) }}
+                        <button id="load-more-em-com" class="btn-rounded align-btn gray-btn">Voir plus</button>
+                    {% else %}
+                        <span class="no-pub form-group">Vous n'avez pas de commentaires</span>
+                    {% endif %}
+                </div>
+                <div class="deleteAccount pub-content">
+                    <span class="fake-title" style="text-align: center">Etes-vous sûr de supprimer votre compte ?</span>
+                    <div class="buttons-f">
+                        <a href="{{ url_for("delete_user", user_id=current_user.ncli) }}" class="btn yes-btn">Oui</a>
+                        <button class="btn no-btn">Non</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+{% endblock %}

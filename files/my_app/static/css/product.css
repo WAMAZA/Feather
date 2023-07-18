@@ -1,0 +1,100 @@
+.content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 43px;
+}
+
+.product-div{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
+    padding: 0 100px;
+    gap: 100px;
+}
+
+.product-image{
+    width: fit-content;
+    text-align: center;
+}
+
+.product-img{
+    width: 263px;
+    height: 391px;
+}
+
+.product-info{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+}
+
+.titre-auteur{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    background: #EEEEEE;
+    border-radius: 10px;
+    width: 100%;
+    box-shadow: 0 0 5px 1px rgb(215 222 221 / 75%);
+    -webkit-box-shadow: 0 0 5px 1px rgb(215 222 221 / 75%);
+    -moz-box-shadow: 0 0 5px 1px rgba(215,222,221,0.75);
+}
+
+.titre-auteur-div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 15px;
+    align-self: stretch;
+    width: 50%;
+}
+
+.title{
+    font-size: 30px;
+}
+
+.text{
+    font-size: 16px;
+    text-align: center;
+}
+
+.resume-title{
+    font-size: 30px;
+}
+
+.resume-text{
+    text-align: justify;
+    font-size: 14px;
+}
+
+.download-div{
+    display: flex;
+    gap: 13px;
+    align-items: center;
+}
+
+.download-div a{
+    display: flex;
+}
+
+.download-div span{
+    font-size: 20px;
+}
+
+.download-btn{
+    padding: 8px 64px;
+    gap: 10px;
+}
+
+.heart-style{
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+

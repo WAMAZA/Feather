@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros %}
+
+{% block header %}
+    <title>Accueil</title>
+    <link rel="stylesheet" href="../static/css/accueil.css">
+    <script src="../static/js/load-more.js" defer></script>
+    <script src="../static/js/like.js" defer></script>
+{% endblock %}
+
+{% block content %}
+    <div class="first-div">
+        <h1>Les plus appréciés</h1>
+    </div>
+
+    <div class="liked normal-div">
+        <div class="all-product">
+            {{ macros.render_product(liked_pubs, user) }}
+        </div>
+    </div>
+
+    <div class="recent normal-div">
+        <h1>Récentes apparitions</h1>
+        <div class="all-product recent-product">
+            {{ macros.render_product(recent_pubs, user) }}
+        </div>
+    </div>
+
+    <div class="publi-actions">
+        <button id="load-more" class="btn-rounded">Voir plus</button>
+        <span>
+            <span id="publi-count"></span>
+            <span id="publi-total"></span>
+        </span>
+    </div>
+
+{% endblock %}

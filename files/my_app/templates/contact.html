@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros %}
+
+{% block header %}
+    <title>Contact</title>
+    <link rel="stylesheet" href="../static/css/form.css">
+    <script src="../static/js/form.js" defer></script>
+
+{% endblock %}
+
+{% block content %}
+    <div class="first-div"></div>
+    <form class="normal-div form" style="text-align: center" method="post" novalidate>
+        <div class="form-group">
+
+            <div class="title">
+                <h1>Contact</h1>
+            </div>
+
+            <div class="error">
+                {% if error %}
+                    {{ error }}
+                {% endif %}
+            </div>
+
+            <div class='line'></div>
+            <div class="form-field">
+                {{ form.csrf_token }}
+
+                {{ macros.render_field(form.nom, 'nom') }}
+                {{ macros.render_field(form.prenom, 'prenom') }}
+                {{ macros.render_field(form.email, 'email') }}
+                {{ macros.render_field(form.message, 'message') }}
+
+                {{ form.submit(class='submit-btn btn') }}
+            </div>
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,118 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+
+html, body{
+    height: 100%;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    font-family: 'Indie Flower', cursive;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+textarea{
+    resize: none;
+}
+
+.link{
+    color: #000;
+}
+
+.link:hover{
+    font-size: 105%;
+    color: rgb(120,120,120);
+    transition: .3s font-size;
+}
+
+i{
+    cursor: pointer;
+}
+
+.btn{
+    font-size: 14px;
+    border: none;
+    padding: 10px;
+    background-color: #000;
+    color: #fff !important;
+    text-align: center;
+    transition: .3s background-color, color;
+    cursor: pointer;
+}
+
+.btn-rounded{
+    font-size: 14px;
+    border: none;
+    border-radius: 30px;
+    padding: 3px;
+    padding-inline: 20px;
+    background-color: #000;
+    color: #fff !important;
+    transition: .3s background-color, color;
+    cursor: pointer;
+}
+
+.btn:hover, .btn-rounded:hover{
+    background-color: rgb(220,220,220);
+    color: #000 !important;
+    transition: .3s background-color, color;
+}
+
+.align-btn{
+    width: fit-content;
+    margin: auto;
+}
+
+img{
+    width: 161px;
+    height: 240px;
+}
+
+.first-div{
+    margin-top: 0;
+    padding-top: 90px;
+}
+
+.first-div h1{
+    text-align: center;
+}
+
+.normal-div h1{
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.normal-div{
+    height: 100%;
+    width: 80%;
+    margin-block: 30px;
+    margin-inline: auto;
+}
+
+
+/* middle line */
+.middle-line:after{
+    content:"";
+    position: absolute;
+    z-index: -1;
+    top: 60px;
+    bottom: 0;
+    left: 50%;
+    border-left: 1px solid #D7DEDD;
+    transform: translate(-50%);
+}

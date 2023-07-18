@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block header %}
+    {% if status == 404 %}
+        <title>Page introuvable !</title>
+    {% elif status == 505 %}
+        <title>Erreur serveur !</title>
+    {% endif %}
+    <link rel="stylesheet" href="../static/css/error.css">
+{% endblock %}
+{% block content %}
+    <div class="main first-div normal-div">
+        <div class="status">
+            <span>{{ status }}</span>
+        </div>
+        <div class="message">
+            {{ message }}
+        </div>
+        <div class="back-btn">
+            <a class="btn" href="{{ url_for("accueil") }}">Retour à l'accueil</a>
+        </div>
+    </div>
+{% endblock %}
+

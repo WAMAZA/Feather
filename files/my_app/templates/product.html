@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros %}
+
+{% block header %}
+    <title>Produit</title>
+    <link rel="stylesheet" href="../static/css/product.css">
+    <link rel="stylesheet" href="../static/css/form.css">
+    <link rel="stylesheet" href="../static/css/comment.css">
+    <script src="../static/js/comment.js" defer></script>
+    <script src="../static/js/form.js"></script>
+    <script src="../static/js/like.js" defer></script>
+{% endblock %}
+
+{% block content %}
+    <div class="first-div"></div>
+    <div class="content normal-div">
+        <div class="product-div">
+            <div class="product-image">
+                <img class="product-img" src="{{ pub.livre.image_link }}">
+            </div>
+            <div class="product-info">
+                <div class="titre-auteur">
+                    <div class="titre-auteur-div">
+                        <p class="title">Titre</p>
+                        <p class="text">{{ pub.livre.titre }}</p>
+                    </div>
+                    <div class="titre-auteur-div">
+                        <p class="title">Auteur</p>
+                        <p class="text">{{ pub.livre.auteur }}</p>
+                    </div>
+                </div>
+                <div class="resume-div">
+                    <p class="resume-title">Résumé</p>
+                    <p class="resume-text">{{ pub.livre.resume }}</p>
+                </div>
+                <div class="download-div">
+                    <a href="{{ url_for("telecharger_produit", npub=pub.npub) }}" class="btn-rounded download-btn">Télécharger</a>
+                    {{ macros.render_product_like_and_download_btn(pub, user, "/produit/%d"%pub.npub)}}
+                </div>
+            </div>
+        </div>
+        <div class="avis">
+            <span class="avis-title">Avis et critiques</span>
+            <!-- Form to add a comment -->
+            <div class="btn-and-msg">
+                {% if user.is_authenticated %}
+                    <button id="add-comment-btn" class="add-comment-btn btn" type="button">Donne ton avis</button>
+                {% else %}
+                    <a href="{{ url_for('connexion', next = '/produit/%d'%pub.npub) }}" id="fake-btn" class="add-comment-btn btn" type="button">Donne ton avis</a>
+                    <p class="error">* Il faut être connecté pour commenter *</p>
+                {% endif %}
+
+            </div>
+
+            <form id="avis-form" class="avis-box" action="{{ url_for("ajout_commentaire", npub=pub.npub) }}" method="post">
+                <div class="form-commentaire">
+                    <label>Commentaire</label>
+                    <textarea id="commentaire-field" class="field-input" name="avis_text" placeholder="donnez votre avis, ne soyez pas timide ;)"></textarea>
+                    <div class="error"></div>
+                </div>
+                <div class="form-note">
+                    <label>Note</label>
+                    <select class="field-input" name="avis_note">
+                        <option value="0">0/5</option>
+                        <option value="1">1/5</option>
+                        <option value="2">2/5</option>
+                        <option value="3">3/5</option>
+                        <option value="4">4/5</option>
+                        <option value="5">5/5</option>
+                    </select>
+                    <div class="error"></div>
+                </div>
+                <div class="avis-buttons">
+                    <button class="add-comment-btn btn avis-submit-btn" type="button" id="cancel-btn">Annuler</button>
+                    <input class="add-comment-btn btn avis-submit-btn" type="submit" value="Donne ton avis">
+                </div>
+            </form>
+
+
+            {{ macros.render_comments(avis, pub)}}
+
+
+        </div>
+    </div>
+{% endblock %}

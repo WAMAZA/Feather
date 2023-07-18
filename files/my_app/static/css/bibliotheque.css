@@ -1,0 +1,7 @@
+.all-product .product:nth-child(n+10){
+    display: none !important;
+}
+
+.all-product{
+    height: fit-content;
+}

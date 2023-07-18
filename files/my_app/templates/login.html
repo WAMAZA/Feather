@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros %}
+
+
+{% block header %}
+    <title>Connexion</title>
+    <link rel="stylesheet" href="../static/css/form.css">
+    <link rel="stylesheet" href="../static/css/connexion.css">
+{% endblock %}
+
+{% block content %}
+    <div class="first-div"></div>
+    <form class="normal-div form" style="text-align: center" action="{{ url_for('connexion', next=nextPage) }}"  method="post" novalidate>
+        <div class="form-group">
+
+            <div class="title">
+                <h1>Connexion</h1>
+            </div>
+
+            <div class="error">
+                {% if error %}
+                    {{ error }}
+                {% endif %}
+            </div>
+
+            <div class='line'></div>
+            <div class="form-field">
+                {{ form.csrf_token }}
+
+                {{ macros.render_field(form.user_name, 'user_name') }}
+                {{ macros.render_field(form.passwd, 'passwd') }}
+
+                {{ form.submit(class='submit-btn btn') }}
+            </div>
+        </div>
+    </form>
+    <div class="inscription-field normal-div">
+        <p class="inscription-text">Pas encore inscrit ? Dépechez-vous de le faire</p>
+        <a class="inscription-btn" href="{{ url_for("inscription") }}">Inscription</a>
+    </div>
+{% endblock %}

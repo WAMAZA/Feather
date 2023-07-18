@@ -1,0 +1,35 @@
+{% macro menu(user) %}
+    <nav class="navbar">
+        <div class="navbar-left">
+            <a href="{{url_for('accueil')}}">
+                <img class="navbar-logo" src="{{url_for('static', filename='img/feather-logo.png')}}" alt="navbar logo">
+            </a>
+        </div>
+        <div class="navbar-middle">
+            <ul>
+                <li><a class="link" href="{{url_for('accueil')}}">Accueil</a></li>
+                <li><a class="link" href="{{url_for('bibliotheque')}}">Bibliothèque</a></li>
+                <li><a class="link" href="{{url_for('contact')}}">Contact</a></li>
+                {% if user.is_authenticated and user.group == "admin" %}
+                    <li><a href="{{url_for('admin')}}">Admin</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        {% if not user.is_authenticated %}
+        <div class="navbar-right">
+            <ul>
+                <li><a href="{{url_for('connexion')}}">Se connecter</a></li>
+                <span>|</span>
+                <li><a href="{{url_for('inscription')}}">S'inscrire</a></li>
+            </ul>
+        </div>
+        {% else %}
+        <div class="navbar-right">
+            <ul>
+                <i class="fa-solid fa-user"></i>
+                <a id="navbar-username" class="link" href="{{ url_for("espace_membre") }}">{{user.username}}</a>
+            </ul>
+        </div>
+        {% endif%}
+    </nav>
+{% endmacro %}

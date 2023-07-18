@@ -1,0 +1,103 @@
+
+/* Publication content */
+.pub-content{
+    display: grid;
+    grid-template-columns: auto;
+    gap: 10px;
+    width: 100%;
+}
+
+.pub-content .pub-group:nth-child(n+4){
+    display: none;
+}
+
+.pub-group{
+    display: flex;
+    padding: 20px;
+    width: 100%;
+    gap: 30px;
+    box-shadow: 0 0 5px 1px rgba(215,222,221,0.75);
+    -webkit-box-shadow: 0 0 5px 1px rgba(215,222,221,0.75);
+    -moz-box-shadow: 0 0 5px 1px rgba(215,222,221,0.75);
+    font-size: 12px !important;
+    overflow: auto;
+}
+
+.image-pub img{
+    width: 84px;
+    height: 125px;
+}
+
+.contenu-pub{
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.info-donnee{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 35px;
+}
+
+.donnee{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nb-like-content img{
+    width: 10px;
+    height: 10px;
+}
+
+.nb-like-content{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+}
+
+.note img{
+    width: 91px;
+    height: 15px;
+}
+
+.livre-info{
+    display: flex;
+    flex-direction: column;
+}
+
+.livre-info *{
+    display: flex;
+    align-items: flex-start;
+    gap: 3px;
+}
+
+
+.resume-text-content{
+    text-align: justify;
+    height: fit-content;
+    max-height: 80px;
+    overflow: auto;
+}
+
+.pub-btn{
+    text-align: left;
+}
+
+.pub-btn *{
+    font-size: 12px;
+    background-color: #6C6C6C;
+    color: white;
+}
+
+.pub-btn *:hover{
+
+}
+
+.sous-titre{
+    color: #6C6C6C;
+}

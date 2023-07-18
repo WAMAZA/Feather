@@ -1,0 +1,34 @@
+.inscription-field{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: fit-content;
+    gap: 16px;
+}
+
+.inscription-text{
+    font-size: 30px;
+}
+
+.inscription-btn{
+    font-size: 16px;
+    padding: 8px;
+    height: 40px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    min-width: 370px;
+    max-width: 370px;
+    margin: auto;
+    transition: .3s background-color, color;
+}
+
+.inscription-btn:hover{
+    background-color: rgb(220,220,220);
+    color: #000 !important;
+    transition: .3s background-color, color;
+}
+
+.form{
+    margin-bottom: 65px;
+}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros %}
+
+{% block header %}
+    <title>Inscription</title>
+    <link rel="stylesheet" href="../static/css/form.css">
+{% endblock %}
+
+{% block content %}
+    <div class="first-div"></div>
+    <form class="normal-div form" action="{{ url_for('inscription') }}"  method="post" novalidate>
+        <div class="form-group">
+            <div class="title">
+                <h1>Inscription</h1>
+            </div>
+            <div class="error">
+                {% if error %}
+                    {{ error }}
+                {% endif %}
+            </div>
+            <div class='line'></div>
+            <div class="form-field">
+                {{ form.csrf_token }}
+                {{ macros.render_field(form.first_name, "Prénom")}}
+                {{ macros.render_field(form.last_name, "Nom")}}
+                {{ macros.render_field(form.email, "Email")}}
+                {{ macros.render_field(form.user_name, 'user_name')}}
+                {{ macros.render_date(form.birthday, "Date de naissance", maxDate)}}
+                {{ macros.render_field(form.passwd, 'passwd') }}
+                {{ macros.render_field(form.passwd_confirm, 'passwd_confirm') }}
+                {{ macros.render_field(form.agree_terms, 'Accepter') }}
+                {{ form.submit(class='submit-btn btn') }}
+            </div>
+        </div>
+    </form>
+{% endblock %}
